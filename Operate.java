@@ -35,6 +35,12 @@ public class Operate{
         tempperson.setAddress(new Scanner(System.in).nextLine());
         tempperson.setId(personarr.size());
         personarr.add(tempperson);
+        Iterator iter = personarr.iterator();
+        FileWriter Writeout = new FileWriter("Person.txt",true);
+        while (iter.hasNext()) {
+            Writeout.write(iter.next().toString()+"\n");
+        }
+        Writeout.close();
         System.out.println("已将" + name + "添加到联系人列表！");
         System.out.println("系统将在2秒后返回上一层…");
         Thread.sleep(2000);
