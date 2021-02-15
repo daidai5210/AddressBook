@@ -46,6 +46,7 @@ public class TelNoteRegex {
                 }
             }
         }
+        //将姓名格式化
         switch(sum){
             case 1:
                 name=name+"     ";
@@ -72,74 +73,83 @@ public class TelNoteRegex {
 
     //验证联系人年龄
     String ageregex() throws Exception {
-        System.out.print("输入年龄，1-150 ：");
-        String age=regex();
-        if(age.matches("[0-9]+")){
-            if (Integer.parseInt(age) >= 1 && Integer.parseInt(age) <= 150) {
-                if(Integer.parseInt(age)>=1&&Integer.parseInt(age)<=9){
-                    age=age+"  ";
-                }
-                else if(Integer.parseInt(age)>=10&&Integer.parseInt(age)<=99){
-                    age=age+" ";
-                }
-                else if(Integer.parseInt(age)>=100&&Integer.parseInt(age)<=150){
-                    age=age;
-                }
-            } else {
-                System.out.println("您输入的年龄不符合实际或含有字符，请检查后重新输入！");
-                System.out.println("系统将在2秒后返回上一层…");
-                Thread.sleep(2000);
-                ageregex();
-            }
-        }
-        else {
-            System.out.println("您输入的年龄不符合实际或含有字符，请检查后重新输入！");
-            System.out.println("系统将在2秒后返回上一层…");
-            Thread.sleep(2000);
-            ageregex();
-        }
-        return age;
+        String agetemp=null;
+       while(true){
+           System.out.print("输入年龄，1-150 ：");
+           String age=regex();
+           if(age.matches("[0-9]+")){
+               if (Integer.parseInt(age) >= 1 && Integer.parseInt(age) <= 150) {
+                   if(Integer.parseInt(age)>=1&&Integer.parseInt(age)<=9){
+                       agetemp=age+"  ";
+                       break;
+                   }
+                   else if(Integer.parseInt(age)>=10&&Integer.parseInt(age)<=99){
+                       agetemp=age+" ";
+                       break;
+                   }
+                   else if(Integer.parseInt(age)>=100&&Integer.parseInt(age)<=150){
+                       agetemp=age;
+                       break;
+                   }
+               } else {
+                   System.out.println("您输入的年龄不符合实际或含有字符，请检查后重新输入！");
+                   System.out.println("系统将在2秒后返回上一层…");
+                   Thread.sleep(2000);
+               }
+           }
+           else {
+               System.out.println("您输入的年龄不符合实际或含有字符，请检查后重新输入！");
+               System.out.println("系统将在2秒后返回上一层…");
+               Thread.sleep(2000);
+           }
+       }
+        return agetemp;
     }
 
 
     //验证性别
    String sexregex() throws Exception{
-        System.out.print("输入性别(男or女) :");
-        String sex=regex();
-        if (sex.equals("男")||sex.equals("女")){
-            sex=sex;
-        }else{
-            System.out.println("您输入的性别不符合实际或含有字符，请检查后重新输入！");
-            System.out.println("系统将在2秒后返回上一层…");
-            Thread.sleep(2000);
-            sexregex();
-        }
-        return sex;
+       String sextemp=null;
+       while(true){
+           System.out.print("输入性别(男or女) :");
+           String sex=regex();
+           if (sex.equals("男")||sex.equals("女")){
+               sextemp=sex;
+               break;
+           }else{
+               System.out.println("您输入的性别不符合实际或含有字符，请检查后重新输入！");
+               System.out.println("系统将在2秒后返回上一层…");
+               Thread.sleep(2000);
+           }
+       }
+       return sextemp;
     }
 
     //验证手机号
     String telnumregex() throws Exception{
+        String telnumtemp=null;
+    while(true){
         System.out.print("输入11位手机号 :");
         String telnum=regex();
         if (!telnum.matches("[a-zA-Z]+")){
             //if(telnum.matches("^(13[0-9]|14[0-9]|15[0-9]|16[0-9]|17[0-9]|18[0-9]|19[0-9])\\d{8}$")){
             if(telnum.matches("^((13[0-9])|(14[0,1,4-9])|(15[0-3,5-9])|(16[2,5,6,7])|(17[0-8])|(18[0-9])|(19[0-3,5-9]))\\d{8}$")){
-                telnum=telnum;
+                telnumtemp=telnum;
+                break;
             }
             else{
                 System.out.println("您输入的手机号不符合实际，请检查后重新输入！");
                 System.out.println("系统将在2秒后返回上一层…");
                 Thread.sleep(2000);
-                telnumregex();
             }
         }
         else{
             System.out.println("您输入的手机号含有字符，请检查后重新输入！");
             System.out.println("系统将在2秒后返回上一层…");
             Thread.sleep(2000);
-            telnumregex();
         }
-        return telnum;
+    }
+        return telnumtemp;
     }
 
     //主菜单验证
