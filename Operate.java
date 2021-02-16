@@ -526,8 +526,10 @@ public class Operate {
     void update() throws Exception{
         FileWriter Writeout = new FileWriter("Person.txt");
         Iterator iter = personarr.iterator();
+        int sum=0;
         while(iter.hasNext()){
-            Writeout.write(iter.next().toString() + "\n");
+            //对操作后的数据进行排序再写入本地文件中，解决id乱序的问题
+            Writeout.write( sum+++(iter.next().toString()).substring(1)+ "\n");
         }
         personarr.clear();
         Writeout.close();
