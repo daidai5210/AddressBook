@@ -9,15 +9,14 @@ public class Operate {
     static ArrayList<Person> personarr = new ArrayList<>();
     Menu menu = new Menu();
     static String id;
-    static int line=1;
 
     //添加联系人进程
     void addlogic() throws Exception {
+        personarr.clear();
         ReadFile();
         Person tempperson = new Person();
         TelNoteRegex regex = new TelNoteRegex();
         clear();
-        personarr.clear();
         System.out.println("请输入您要添加的联系人信息...");
         //添加联系人姓名
         String name = regex.nameregex();
@@ -34,12 +33,9 @@ public class Operate {
         //添加联系人地址
         System.out.print("输入地址 :");
         tempperson.setAddress(new Scanner(System.in).nextLine());
-        tempperson.setId(line);
+        tempperson.setId(personarr.size());
         personarr.add(tempperson);
-        FileWriter Writeout = new FileWriter("Person.txt", true);
-        Writeout.write(personarr.get(0).toString() + "\n");
-        personarr.clear();
-        Writeout.close();
+        update();
         System.out.println("已将" + name.trim() + "添加到联系人列表！");
         System.out.println("系统将在2秒后返回上一层…");
         Thread.sleep(2000);
@@ -299,6 +295,8 @@ public class Operate {
 
     //修改联系人的属性
     void modifyofid() throws Exception {
+        personarr.clear();
+        ReadFile();
         TelNoteRegex regex = new TelNoteRegex();
         menu.subModifyMenu();
         String temp = modifyofidregex(regex.regex());
@@ -337,6 +335,7 @@ public class Operate {
                         break;
                 }
                 System.out.println("修改后：" + "#" + tempname.getId() + "   姓名:" + tempname.getName() + "   年龄:" + tempname.getAge() + "   性别:" + tempname.getSex() + "   手机号:" + tempname.getTelNum() + "   住址:" + tempname.getAddress());
+                update();
                 System.out.println("修改成功！\n");
                 break;
             }
@@ -362,10 +361,31 @@ public class Operate {
 
     }
 
+    //对联系人属性进行判断
+    String modifyofidregex(String temp1) {
+        String temp2 = "temp";
+        if (temp1.equals("1"))
+            temp2 = "姓名";
+        else if (temp1.equals("2"))
+            temp2 = "年龄";
+        else if (temp1.equals("3"))
+            temp2 = "性别";
+        else if (temp1.equals("4"))
+            temp2 = "地址";
+        else if (temp1.equals("5"))
+            temp2 = "号码";
+        else if (temp1.equals("6"))
+            temp2 = "6";
+        else {
+            temp2 = "no";
+        }
+        return temp2;
+    }
 
     //删除全部记录
     void deleteAll() throws Exception {
         personarr.removeAll(personarr);
+        update();
         System.out.println("删除成功！\n系统将在2秒后返回到上一层...");
         Thread.sleep(2000);
         menu.deleteMenu();
@@ -385,6 +405,7 @@ public class Operate {
             if (valueOf(tempname.getId()).equals(this.id)) {
                 flog = true;
                 personarr.remove(personarr.get(i));
+                update();
                 System.out.println("删除成功！\n系统将在2秒后返回到上一层...");
                 Thread.sleep(2000);
                 menu.deleteMenu();
@@ -417,6 +438,7 @@ public class Operate {
     public void orderAge() throws Exception {
         Collections.sort(personarr, new AgeComparator());
         clear();
+        update();
         System.out.println("排序成功！");
         System.out.println("系统将在2秒后返回到上一层...");
         Thread.sleep(2000);
@@ -434,6 +456,7 @@ public class Operate {
     public void orderName() throws Exception {
         Collections.sort(personarr, new NameComparator());
         clear();
+        update();
         System.out.println("排序成功！");
         System.out.println("系统将在2秒后返回到上一层...");
         Thread.sleep(2000);
@@ -451,6 +474,7 @@ public class Operate {
     public void orderSex() throws Exception {
         Collections.sort(personarr, new SexComparator());
         clear();
+        update();
         System.out.println("排序成功！");
         System.out.println("系统将在2秒后返回到上一层...");
         Thread.sleep(2000);
@@ -477,25 +501,7 @@ public class Operate {
     }
 
 
-    String modifyofidregex(String temp1) {
-        String temp2 = "temp";
-        if (temp1.equals("1"))
-            temp2 = "姓名";
-        else if (temp1.equals("2"))
-            temp2 = "年龄";
-        else if (temp1.equals("3"))
-            temp2 = "性别";
-        else if (temp1.equals("4"))
-            temp2 = "地址";
-        else if (temp1.equals("5"))
-            temp2 = "号码";
-        else if (temp1.equals("6"))
-            temp2 = "6";
-        else {
-            temp2 = "no";
-        }
-        return temp2;
-    }
+
 
 
     //清屏效果
@@ -509,12 +515,22 @@ public class Operate {
             BufferedReader br = new BufferedReader(read);
             String str;
             while((str=br.readLine())!=null){
-                line++;
                 String[] strarr = str.split("-");
                 personarr.add(new Person(Integer.parseInt(strarr[0]),strarr[1],strarr[2],strarr[3],strarr[4],strarr[5]));
             }
             br.close();
             read.close();
+    }
+
+    //更新本地文件
+    void update() throws Exception{
+        FileWriter Writeout = new FileWriter("Person.txt");
+        Iterator iter = personarr.iterator();
+        while(iter.hasNext()){
+            Writeout.write(iter.next().toString() + "\n");
+        }
+        personarr.clear();
+        Writeout.close();
     }
 }
 
