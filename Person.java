@@ -15,8 +15,14 @@ class Person implements Serializable {
     public Person() {
     }   //无参构造
 
-    public Person(String name, String age, String sex, String telNum, String address) {
-    }//有参数构造方法
+    public Person(int id, String name, String age, String sex, String telNum, String address) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.sex = sex;
+        this.telNum = telNum;
+        this.address = address;
+    }
 
     public int getId() {
         return id;
@@ -69,7 +75,7 @@ class Person implements Serializable {
     @Override
     public String toString() {
         //id 输出长度控制
-        return "序号  " + "#" + id + "   姓名:" + name + "   年龄:" + age + "   性别:" + sex + "   手机号:" + telNum + "   住址:" + address;
+        return id + "-"+name +"-"+age + "-" +sex + "-"+telNum + "-"+address;
     }
 
     //按年龄排序

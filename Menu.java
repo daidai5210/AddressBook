@@ -1,5 +1,4 @@
 package AddressBook;
-
 class Menu {
     //主菜单
     void mainMenu() throws Exception {
@@ -276,4 +275,5 @@ class Menu {
         }
     }
 
-}
+
+    }

@@ -43,27 +43,6 @@ public class TelNoteRegex {
                 }
             }
         }
-        //将姓名格式化
-        switch (sum) {
-            case 1:
-                name = name + "     ";
-                break;
-            case 2:
-                name = name + "    ";
-                break;
-            case 3:
-                name = name + "   ";
-                break;
-            case 4:
-                name = name + "  ";
-                break;
-            case 5:
-                name = name + " ";
-                break;
-            case 6:
-                name = name;
-                break;
-        }
         return name;
     }
 
@@ -76,16 +55,8 @@ public class TelNoteRegex {
             String age = regex();
             if (age.matches("[0-9]+")) {
                 if (Integer.parseInt(age) >= 1 && Integer.parseInt(age) <= 150) {
-                    if (Integer.parseInt(age) >= 1 && Integer.parseInt(age) <= 9) {
-                        agetemp = age + "  ";
+                    agetemp = age;
                         break;
-                    } else if (Integer.parseInt(age) >= 10 && Integer.parseInt(age) <= 99) {
-                        agetemp = age + " ";
-                        break;
-                    } else if (Integer.parseInt(age) >= 100 && Integer.parseInt(age) <= 150) {
-                        agetemp = age;
-                        break;
-                    }
                 } else {
                     System.out.println("您输入的年龄不符合实际或含有字符，请检查后重新输入！");
                     System.out.println("系统将在2秒后返回上一层…");

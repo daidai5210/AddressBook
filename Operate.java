@@ -9,13 +9,15 @@ public class Operate {
     static ArrayList<Person> personarr = new ArrayList<>();
     Menu menu = new Menu();
     static String id;
+    static int line=1;
 
     //添加联系人进程
     void addlogic() throws Exception {
+        ReadFile();
         Person tempperson = new Person();
         TelNoteRegex regex = new TelNoteRegex();
         clear();
-
+        personarr.clear();
         System.out.println("请输入您要添加的联系人信息...");
         //添加联系人姓名
         String name = regex.nameregex();
@@ -32,13 +34,11 @@ public class Operate {
         //添加联系人地址
         System.out.print("输入地址 :");
         tempperson.setAddress(new Scanner(System.in).nextLine());
-        tempperson.setId(personarr.size());
+        tempperson.setId(line);
         personarr.add(tempperson);
-        Iterator iter = personarr.iterator();
         FileWriter Writeout = new FileWriter("Person.txt", true);
-        while (iter.hasNext()) {
-            Writeout.write(iter.next().toString() + "\n");
-        }
+        Writeout.write(personarr.get(0).toString() + "\n");
+        personarr.clear();
         Writeout.close();
         System.out.println("已将" + name.trim() + "添加到联系人列表！");
         System.out.println("系统将在2秒后返回上一层…");
@@ -48,11 +48,15 @@ public class Operate {
 
     //查看所有联系人
     void showAll() throws Exception {
+        personarr.clear();
+        ReadFile();
         TelNoteRegex regex = new TelNoteRegex();
         clear();
         Iterator iter = personarr.iterator();
         while (iter.hasNext()) {
-            System.out.println(iter.next());
+            String str=iter.next().toString();
+                String[] strarr = str.split("-");
+            System.out.println("序号  " + "#" + Integer.parseInt(strarr[0]) + "   姓名:" + strarr[1] + "   年龄:" + strarr[2] + "   性别:" + strarr[3] + "   手机号:" + strarr[4] + "   住址:" + strarr[5]);
         }
         System.out.print("返回主菜单请输入1，退出程序请输入2:");
         switch (regex.regex()) {
@@ -497,6 +501,20 @@ public class Operate {
     //清屏效果
     void clear() {
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+    }
+
+    //加载联系人文件
+    void ReadFile()throws Exception{
+            FileReader read = new FileReader("Person.txt");
+            BufferedReader br = new BufferedReader(read);
+            String str;
+            while((str=br.readLine())!=null){
+                line++;
+                String[] strarr = str.split("-");
+                personarr.add(new Person(Integer.parseInt(strarr[0]),strarr[1],strarr[2],strarr[3],strarr[4],strarr[5]));
+            }
+            br.close();
+            read.close();
     }
 }
 
