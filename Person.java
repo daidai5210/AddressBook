@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.Collections;
 import java.util.Comparator;
 
-class Person implements Serializable{
+class Person implements Serializable {
     private int id; //用户ID 属性
     private String name; //用户姓名属性
     private String age; //用户年龄属性

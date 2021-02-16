@@ -5,11 +5,10 @@ import java.util.*;
 
 import static java.lang.String.valueOf;
 
-public class Operate{
+public class Operate {
     static ArrayList<Person> personarr = new ArrayList<>();
     Menu menu = new Menu();
     static String id;
-
 
     //添加联系人进程
     void addlogic() throws Exception {
@@ -36,9 +35,9 @@ public class Operate{
         tempperson.setId(personarr.size());
         personarr.add(tempperson);
         Iterator iter = personarr.iterator();
-        FileWriter Writeout = new FileWriter("Person.txt",true);
+        FileWriter Writeout = new FileWriter("Person.txt", true);
         while (iter.hasNext()) {
-            Writeout.write(iter.next().toString()+"\n");
+            Writeout.write(iter.next().toString() + "\n");
         }
         Writeout.close();
         System.out.println("已将" + name.trim() + "添加到联系人列表！");
@@ -49,14 +48,30 @@ public class Operate{
 
     //查看所有联系人
     void showAll() throws Exception {
+        TelNoteRegex regex = new TelNoteRegex();
         clear();
         Iterator iter = personarr.iterator();
         while (iter.hasNext()) {
             System.out.println(iter.next());
         }
         System.out.print("返回主菜单请输入1，退出程序请输入2:");
-        TelNoteRegex regex = new TelNoteRegex();
-        regex.showallregex();
+        switch (regex.regex()) {
+            case "1":
+                menu.mainMenu();
+                break;
+            case "2": {
+                System.out.print("正在退出程序，请稍等…");
+                Thread.sleep(2000);
+                break;
+            }
+            default: {
+                System.out.println("您的输入有误，请检查后重新输入！");
+                System.out.println("系统将在2秒内返回主菜单……");
+                Thread.sleep(2000);
+                clear();
+                menu.mainMenu();
+            }
+        }
     }
 
     //按姓名查找联系人
@@ -69,12 +84,12 @@ public class Operate{
         boolean flog = false;
         for (i = 0; i < personarr.size(); i++) {
             tempname = personarr.get(i);
-            if (tempname.getName().equals(name)) {
+            if (tempname.getName().trim().equals(name)) {
                 System.out.println("序号  " + "#" + tempname.getId() + "   姓名:" + tempname.getName() + "   年龄:" + tempname.getAge() + "   性别:" + tempname.getSex() + "   手机号:" + tempname.getTelNum() + "   住址:" + tempname.getAddress());
                 flog = true;
                 if (i == personarr.size() - 1) {
                     System.out.print("已为你找到以上联系人，编辑联系人请回复1，返回上一级请回复2 :");
-                    regex.search2Menuregex();
+                    search2Menuregex();
                 }
             }
             if (i == personarr.size() - 1) {
@@ -106,12 +121,12 @@ public class Operate{
         boolean flog = false;
         for (i = 0; i < personarr.size(); i++) {
             tempname = personarr.get(i);
-            if (tempname.getAge().equals(age)) {
+            if (tempname.getAge().trim().equals(age)) {
                 System.out.println("序号  " + "#" + tempname.getId() + "   姓名:" + tempname.getName() + "   年龄:" + tempname.getAge() + "   性别:" + tempname.getSex() + "   手机号:" + tempname.getTelNum() + "   住址:" + tempname.getAddress());
                 flog = true;
                 if (i == personarr.size() - 1) {
                     System.out.print("已为你找到以上联系人，编辑联系人请回复1，返回上一级请回复2 :");
-                    regex.search2Menuregex();
+                    search2Menuregex();
 
                 }
             }
@@ -136,7 +151,7 @@ public class Operate{
     //按性别查找联系人
     void searchBySex() throws Exception {
         TelNoteRegex regex = new TelNoteRegex();
-        System.out.print("请输入你要查询的联系人年龄：");
+        System.out.print("请输入你要查询的联系人性别：");
         String sex = regex.regex();
         Person tempname = null;
         int i;
@@ -148,7 +163,7 @@ public class Operate{
                 flog = true;
                 if (i == personarr.size() - 1) {
                     System.out.print("已为你找到以上联系人，编辑联系人请回复1，返回上一级请回复2 :");
-                    regex.search2Menuregex();
+                    search2Menuregex();
 
                 }
             }
@@ -186,7 +201,7 @@ public class Operate{
                 flog = true;
                 if (i == personarr.size() - 1) {
                     System.out.print("已为你找到以上联系人，编辑联系人请回复1，返回上一级请回复2 :");
-                    regex.search2Menuregex();
+                    search2Menuregex();
 
                 }
             }
@@ -223,7 +238,7 @@ public class Operate{
                 flog = true;
                 if (i == personarr.size() - 1) {
                     System.out.print("已为你找到以上联系人，编辑联系人请回复1，返回上一级请回复2 :");
-                    regex.search2Menuregex();
+                    search2Menuregex();
 
                 }
             }
@@ -282,7 +297,7 @@ public class Operate{
     void modifyofid() throws Exception {
         TelNoteRegex regex = new TelNoteRegex();
         menu.subModifyMenu();
-        String temp = regex.modifyofidregex(regex.regex());
+        String temp = modifyofidregex(regex.regex());
         Person tempname = null;
         int i;
         boolean flog = false;
@@ -323,7 +338,24 @@ public class Operate{
             }
         }
         System.out.print("返回上一层请输入1，返回主菜单请输入2，退出程序请输入3 :");
-        regex.modify1Menuregex();
+        switch (regex.regex()) {
+            case "1":
+                menu.modifyMenu();
+                break;
+            case "2":
+                menu.mainMenu();
+                break;
+            case "3":
+                break;
+            default: {
+                System.out.println("您的输入有误，请检查后重新输入！");
+                System.out.print("系统将在2秒内返回上一层……");
+                Thread.sleep(2000);
+                clear();
+                menu.modifyMenu();
+            }
+        }
+
     }
 
 
@@ -419,6 +451,46 @@ public class Operate{
         System.out.println("系统将在2秒后返回到上一层...");
         Thread.sleep(2000);
         menu.orderMenu();
+    }
+
+    void search2Menuregex() throws Exception {
+        TelNoteRegex regex = new TelNoteRegex();
+        switch (regex.regex()) {
+            case "1":
+                menu.subModifyMenu();
+                break;
+            case "2":
+                menu.searchMenu();
+                break;
+            default: {
+                System.out.println("您的输入有误，请检查后重新输入！");
+                System.out.println("系统将在2秒内返回主菜单……");
+                Thread.sleep(2000);
+                clear();
+                menu.mainMenu();
+            }
+        }
+    }
+
+
+    String modifyofidregex(String temp1) {
+        String temp2 = "temp";
+        if (temp1.equals("1"))
+            temp2 = "姓名";
+        else if (temp1.equals("2"))
+            temp2 = "年龄";
+        else if (temp1.equals("3"))
+            temp2 = "性别";
+        else if (temp1.equals("4"))
+            temp2 = "地址";
+        else if (temp1.equals("5"))
+            temp2 = "号码";
+        else if (temp1.equals("6"))
+            temp2 = "6";
+        else {
+            temp2 = "no";
+        }
+        return temp2;
     }
 
 
