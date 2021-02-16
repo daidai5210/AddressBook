@@ -12,7 +12,6 @@ public class Operate {
 
     //添加联系人进程
     void addlogic() throws Exception {
-        personarr.clear();
         ReadFile();
         Person tempperson = new Person();
         TelNoteRegex regex = new TelNoteRegex();
@@ -44,7 +43,6 @@ public class Operate {
 
     //查看所有联系人
     void showAll() throws Exception {
-        personarr.clear();
         ReadFile();
         TelNoteRegex regex = new TelNoteRegex();
         clear();
@@ -76,6 +74,7 @@ public class Operate {
 
     //按姓名查找联系人
     void searchByName() throws Exception {
+        ReadFile();
         TelNoteRegex regex = new TelNoteRegex();
         System.out.print("请输入你要查询的联系人姓名：");
         String name = regex.regex();
@@ -113,6 +112,7 @@ public class Operate {
 
     //按年龄查找联系人
     void searchByAge() throws Exception {
+        ReadFile();
         TelNoteRegex regex = new TelNoteRegex();
         System.out.print("请输入你要查询的联系人年龄：");
         String age = regex.regex();
@@ -150,6 +150,7 @@ public class Operate {
 
     //按性别查找联系人
     void searchBySex() throws Exception {
+        ReadFile();
         TelNoteRegex regex = new TelNoteRegex();
         System.out.print("请输入你要查询的联系人性别：");
         String sex = regex.regex();
@@ -188,6 +189,7 @@ public class Operate {
 
     //按住址查找联系人
     void searchByAddress() throws Exception {
+        ReadFile();
         TelNoteRegex regex = new TelNoteRegex();
         System.out.print("请输入你要查询的联系人住址：");
         String address = regex.regex();
@@ -225,6 +227,7 @@ public class Operate {
 
     //按手机号查找联系人
     void searchByTelNum() throws Exception {
+        ReadFile();
         TelNoteRegex regex = new TelNoteRegex();
         System.out.print("请输入你要查询的联系人手机号：");
         String telnum = regex.regex();
@@ -263,6 +266,7 @@ public class Operate {
 
     //修改指定记录
     void modify() throws Exception {
+        ReadFile();
         clear();
         System.out.print("请输入您将要修改的联系人的ID：");
         TelNoteRegex regex = new TelNoteRegex();
@@ -295,7 +299,6 @@ public class Operate {
 
     //修改联系人的属性
     void modifyofid() throws Exception {
-        personarr.clear();
         ReadFile();
         TelNoteRegex regex = new TelNoteRegex();
         menu.subModifyMenu();
@@ -393,6 +396,7 @@ public class Operate {
 
     //删除指定联系人
     void delete() throws Exception {
+        ReadFile();
         clear();
         System.out.print("请输入您将要删除的联系人的ID：");
         TelNoteRegex regex = new TelNoteRegex();
@@ -511,6 +515,7 @@ public class Operate {
 
     //加载联系人文件
     void ReadFile()throws Exception{
+            personarr.clear();
             FileReader read = new FileReader("Person.txt");
             BufferedReader br = new BufferedReader(read);
             String str;

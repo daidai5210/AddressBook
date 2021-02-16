@@ -244,6 +244,7 @@ class Menu {
         TelNoteRegex regex = new TelNoteRegex();
         Operate operate = new Operate();
         operate.clear();
+        operate.ReadFile();
         System.out.println("      排序系统      ");
         System.out.println("*******************");
         System.out.println("**  1、按年龄排序  **");
